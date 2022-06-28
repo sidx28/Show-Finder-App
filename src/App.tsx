@@ -1,5 +1,7 @@
+import ShowList from "./Components/ShowList";
+
 function App() {
-  return <div className="text-red-500">hello world</div>;
+  return <ShowList />;
 }
 
 export default App;
