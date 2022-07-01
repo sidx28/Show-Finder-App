@@ -11,8 +11,9 @@ export function* fetchShowsSaga(action: AnyAction): Generator<any, any, any> {
   if (!action.payload) {
     return;
   }
-  const data = yield call(getShows, action.payload);
-  yield put(showsFetchedAction(data));
+  const query: string = action.payload;
+  const data = yield call(getShows, query);
+  yield put(showsFetchedAction(query, data));
 }
 export function* rootSaga() {
   yield takeLatest(SHOWS_FETCH, fetchShowsSaga);

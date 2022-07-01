@@ -7,7 +7,7 @@ export const showsFetchAction = (query: string) => ({
   type: SHOWS_FETCH,
   payload: query,
 });
-export const showsFetchedAction = (shows: Show[]) => ({
+export const showsFetchedAction = (query: string, shows: Show[]) => ({
   type: SHOWS_FETCHED,
-  payload: shows,
+  payload: { query, shows },
 });

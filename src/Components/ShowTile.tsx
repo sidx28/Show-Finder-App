@@ -7,7 +7,6 @@ const ShowTile: FC<ShowTileProps> = ({ show }) => {
   return (
     <div className="flex items-stretch bg-gray-300 p-2 rounded-md">
       <div className="w-20 shrink-0">
-        {" "}
         <img
           className="w-full"
           src={
