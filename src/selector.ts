@@ -11,7 +11,7 @@ const showsAgainstQuerySelector = createSelector(
   showStateSelector,
   (showState) => showState.againstQuery
 );
-const showEntitiesSelector = createSelector(
+export const showEntitiesSelector = createSelector(
   showStateSelector,
   (showState) => showState.entities
 );
@@ -24,4 +24,8 @@ export const showsSelector = createSelector(
   showIdsSelector,
   showEntitiesSelector,
   (ids, entities) => ids.map((id) => entities[id])
+);
+export const showLoadingSelector = createSelector(
+  showStateSelector,
+  (showState) => showState.showLoading
 );

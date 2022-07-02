@@ -1,17 +1,24 @@
 import { Show } from "../models/Show";
 import { Reducer } from "redux";
-import { SHOWS_FETCH, SHOWS_FETCHED } from "../action";
+import {
+  SHOW_FETCH,
+  SHOW_FETCHED,
+  SHOW_LIST_FETCH,
+  SHOW_LIST_FETCHED,
+} from "../action";
 import { normalize, schema } from "normalizr";
 
 type ShowState = {
   entities: { [id: number]: Show };
   againstQuery: { [q: string]: number[] };
   query: string;
+  showLoading: { [showId: number]: boolean };
 };
 const initialShowState: ShowState = {
   entities: {},
   againstQuery: {},
   query: "",
+  showLoading: {},
 };
 
 export const showReducer: Reducer<ShowState> = (
@@ -19,9 +26,18 @@ export const showReducer: Reducer<ShowState> = (
   action
 ) => {
   switch (action.type) {
-    case SHOWS_FETCH:
+    case SHOW_FETCH:
+      return { ...state, showLoading: { [action.payload]: true } };
+    case SHOW_FETCHED:
+      const show: Show = action.payload;
+      return {
+        ...state,
+        entities: { ...state.entities, [show.id]: show },
+        showLoading: { [show.id]: false },
+      };
+    case SHOW_LIST_FETCH:
       return { ...state, query: action.payload };
-    case SHOWS_FETCHED:
+    case SHOW_LIST_FETCHED:
       const { query, shows } = action.payload as {
         query: string;
         shows: Show[];

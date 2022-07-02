@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, memo } from "react";
 import { connect } from "react-redux";
-import { showsFetchAction } from "../action";
+import { showListFetchAction } from "../action";
 import { Show } from "../models/Show";
 import { showsQuerySelector, showsSelector } from "../selector";
 import { State } from "../store";
@@ -41,6 +41,6 @@ const mapStateToProps = (s: State) => ({
   query: showsQuerySelector(s),
 });
 const mapDispatchToProps = {
-  fetchShows: showsFetchAction,
+  fetchShows: showListFetchAction,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(memo(ShowList));
