@@ -1,9 +1,10 @@
-import { ChangeEvent, FC, InputHTMLAttributes, memo, useEffect } from "react";
+import { ChangeEvent, FC, memo } from "react";
 import { connect } from "react-redux";
 import { showsFetchAction } from "../action";
 import { Show } from "../models/Show";
 import { showsQuerySelector, showsSelector } from "../selector";
 import { State } from "../store";
+import SearchInput from "./SearchInput";
 import ShowTile from "./ShowTile";
 
 type ShowListProps = {
@@ -18,13 +19,17 @@ const ShowList: FC<ShowListProps> = ({ shows, fetchShows, query }) => {
   };
   return (
     <>
-      <div className="p-5">
-        <input placeholder="search" value={query} onChange={handleChange} />
-        <div className="space-y-3 mt-5">
+      <div className="p-5 sm:p-10">
+        <SearchInput
+          placeholder="search"
+          value={query}
+          onChange={handleChange}
+        />
+        <ul className="space-y-3 mt-5">
           {shows.map((s) => (
             <ShowTile key={s.id} show={s} />
           ))}
-        </div>
+        </ul>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
-import ShowList from "./Components/ShowList";
+import MainPage from "./Components/MainPage";
 
 function App() {
-  return <ShowList />;
+  return <MainPage />;
 }
 
 export default App;

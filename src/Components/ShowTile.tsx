@@ -1,12 +1,13 @@
 import { FC, memo } from "react";
 import { Show } from "../models/Show";
+import H3 from "./H3";
 
 type ShowTileProps = { show: Show };
 
 const ShowTile: FC<ShowTileProps> = ({ show }) => {
   return (
-    <div className="flex items-stretch bg-gray-300 p-2 rounded-md">
-      <div className="w-20 shrink-0">
+    <li className="flex items-stretch bg-gray-300 p-2 rounded-md h-32 sm:h-64 overflow-hidden">
+      <div className="self-center w-20 sm:w-32 shrink-0">
         <img
           className="w-full"
           src={
@@ -16,10 +17,13 @@ const ShowTile: FC<ShowTileProps> = ({ show }) => {
         ></img>
       </div>
       <div className="ml-2">
-        <h3>{show.name}</h3>
-        <p>{show.summary}</p>
+        <H3>{show.name}</H3>
+        <p
+          dangerouslySetInnerHTML={{ __html: show.summary }}
+          className="text-gray-700"
+        ></p>
       </div>
-    </div>
+    </li>
   );
 };
 
