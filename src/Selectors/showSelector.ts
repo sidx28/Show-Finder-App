@@ -1,4 +1,4 @@
-import { State } from "./store";
+import { State } from "../store";
 import { createSelector } from "reselect";
 
 export const showStateSelector = (s: State) => s.shows;

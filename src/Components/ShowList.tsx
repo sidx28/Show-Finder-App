@@ -2,7 +2,7 @@ import { ChangeEvent, FC, memo } from "react";
 import { connect } from "react-redux";
 import { showListFetchAction } from "../action";
 import { Show } from "../models/Show";
-import { showsQuerySelector, showsSelector } from "../selector";
+import { showsQuerySelector, showsSelector } from "../Selectors/showSelector";
 import { State } from "../store";
 import SearchInput from "./SearchInput";
 import ShowTile from "./ShowTile";
@@ -27,7 +27,7 @@ const ShowList: FC<ShowListProps> = ({ shows, fetchShows, query }) => {
         />
         <ul className="space-y-3 mt-5">
           {shows.map((s) => (
-            <ShowTile key={s.id} show={s} />
+            <ShowTile query={query} key={s.id} show={s} />
           ))}
         </ul>
       </div>

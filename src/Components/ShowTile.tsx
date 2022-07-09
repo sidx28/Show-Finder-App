@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Show } from "../models/Show";
 import H3 from "./H3";
 
-type ShowTileProps = { show: Show };
+type ShowTileProps = { show: Show; query: string };
 
-const ShowTile: FC<ShowTileProps> = ({ show }) => {
+const ShowTile: FC<ShowTileProps> = ({ show, query }) => {
   const navigate = useNavigate();
-  const handleClick = () => navigate(`/shows/${show.id}`);
+  const handleClick = () => navigate(`/shows/${show.id}?q=${query}`);
   return (
     <li
       onClick={handleClick}

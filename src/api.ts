@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Actor } from "./models/Actor";
 import { Show } from "./models/Show";
 
 type ShowObject = { show: Show };
@@ -12,6 +13,12 @@ export const getShowList = async (query: string) => {
 export const getShow = async (showId: number) => {
   const reponse = await axios.get<Show>(
     `https://api.tvmaze.com/shows/${showId}`
+  );
+  return reponse.data;
+};
+export const getShowCast = async (showId: number) => {
+  const reponse = await axios.get<{ person: Actor }[]>(
+    `https://api.tvmaze.com/shows/${showId}/cast`
   );
   return reponse.data;
 };

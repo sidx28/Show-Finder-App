@@ -1,28 +1,32 @@
 import { Show } from "../models/Show";
 import { Reducer } from "redux";
 import {
+  SHOW_CAST_FETCHED,
   SHOW_FETCH,
   SHOW_FETCHED,
   SHOW_LIST_FETCH,
   SHOW_LIST_FETCHED,
 } from "../action";
 import { normalize, schema } from "normalizr";
+import { Actor } from "../models/Actor";
 
 type ShowState = {
   entities: { [id: number]: Show };
   againstQuery: { [q: string]: number[] };
   query: string;
   showLoading: { [showId: number]: boolean };
+  actors: { [showId: number]: number[] };
 };
-const initialShowState: ShowState = {
+const initialState: ShowState = {
   entities: {},
   againstQuery: {},
   query: "",
   showLoading: {},
+  actors: {},
 };
 
 export const showReducer: Reducer<ShowState> = (
-  state = initialShowState,
+  state = initialState,
   action
 ) => {
   switch (action.type) {
@@ -45,12 +49,19 @@ export const showReducer: Reducer<ShowState> = (
       const showEntity = new schema.Entity("shows");
       const normalized = normalize(shows, [showEntity]);
       const normalizedShows = normalized.entities.shows;
-      const ids = shows.map((s) => s.id);
+      const ids = normalized.result;
       return {
         ...state,
         entities: { ...state.entities, ...normalizedShows },
         againstQuery: { ...state.againstQuery, [query]: ids },
       };
+    case SHOW_CAST_FETCHED:
+      const { showId, actors } = action.payload as {
+        showId: number;
+        actors: Actor[];
+      };
+      const actorsId = actors.map((a) => a.id);
+      return { ...state, actors: { ...state.actors, [showId]: actorsId } };
     default:
       return state;
   }

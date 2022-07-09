@@ -1,10 +1,16 @@
 import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 export interface WithRouterProps {
   location: ReturnType<typeof useLocation>;
   params: Record<string, string>;
   navigate: ReturnType<typeof useNavigate>;
+  search: ReturnType<typeof useSearchParams>;
 }
 
 export const withRouter = <T extends WithRouterProps>(
@@ -14,6 +20,7 @@ export const withRouter = <T extends WithRouterProps>(
     const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
+    const [search] = useSearchParams();
 
     return (
       <Component
@@ -21,6 +28,7 @@ export const withRouter = <T extends WithRouterProps>(
         location={location}
         params={params}
         navigate={navigate}
+        search={search}
       />
     );
   };
