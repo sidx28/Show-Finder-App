@@ -20,7 +20,7 @@ export const withRouter = <T extends WithRouterProps>(
     const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
-    const [search] = useSearchParams();
+    const search = useSearchParams();
 
     return (
       <Component

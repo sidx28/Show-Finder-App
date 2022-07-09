@@ -51,7 +51,7 @@ const ShowDetail: FC<ShowDetailProps> = ({
   }, [params.showId]);
 
   useEffect(() => {
-    const query = search.get("q");
+    const query = (search as any).get("q");
     if (!show && query) {
       fetchShowList(query);
     }
