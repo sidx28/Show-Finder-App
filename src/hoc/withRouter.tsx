@@ -10,7 +10,7 @@ export interface WithRouterProps {
   location: ReturnType<typeof useLocation>;
   params: Record<string, string>;
   navigate: ReturnType<typeof useNavigate>;
-  search: ReturnType<typeof useSearchParams>;
+  search: ReturnType<typeof useSearchParams>[0];
 }
 
 export const withRouter = <T extends WithRouterProps>(
@@ -20,7 +20,7 @@ export const withRouter = <T extends WithRouterProps>(
     const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
-    const search = useSearchParams();
+    const [search] = useSearchParams();
 
     return (
       <Component

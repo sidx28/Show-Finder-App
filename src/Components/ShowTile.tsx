@@ -1,12 +1,14 @@
 import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
+import { withRouter, WithRouterProps } from "../hoc/withRouter";
 import { Show } from "../models/Show";
 import H3 from "./H3";
 
-type ShowTileProps = { show: Show; query: string };
+type ShowTileProps = { show: Show } & WithRouterProps;
 
-const ShowTile: FC<ShowTileProps> = ({ show, query }) => {
+const ShowTile: FC<ShowTileProps> = ({ show, search }) => {
   const navigate = useNavigate();
+  const query = search.get("q");
   const handleClick = () => navigate(`/shows/${show.id}?q=${query}`);
   return (
     <li
@@ -35,4 +37,4 @@ const ShowTile: FC<ShowTileProps> = ({ show, query }) => {
 
 ShowTile.defaultProps = {};
 
-export default memo(ShowTile);
+export default withRouter(memo(ShowTile));

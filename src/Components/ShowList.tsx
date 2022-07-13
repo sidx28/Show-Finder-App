@@ -1,6 +1,8 @@
-import { ChangeEvent, FC, memo } from "react";
+import { ChangeEvent, FC, memo, useEffect } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { showListFetchAction } from "../action";
+import { withRouter, WithRouterProps } from "../hoc/withRouter";
 import { Show } from "../models/Show";
 import { showsQuerySelector, showsSelector } from "../Selectors/showSelector";
 import { State } from "../store";
@@ -9,14 +11,19 @@ import ShowTile from "./ShowTile";
 
 type ShowListProps = {
   shows: Show[];
-  query: string;
-  fetchShows: (query: string) => void;
-};
+  fetchShow: (query: string) => void;
+} & WithRouterProps;
 
-const ShowList: FC<ShowListProps> = ({ shows, fetchShows, query }) => {
+const ShowList: FC<ShowListProps> = ({ shows, search, fetchShow }) => {
+  const navigate = useNavigate();
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    fetchShows(event.target.value);
+    navigate(`/shows?q=${event.target.value}`);
   };
+  const query = search.get("q") || "";
+  console.log(query.length);
+  useEffect(() => {
+    fetchShow(query);
+  }, [query]);
   return (
     <>
       <div className="p-5 sm:p-10">
@@ -25,11 +32,13 @@ const ShowList: FC<ShowListProps> = ({ shows, fetchShows, query }) => {
           value={query}
           onChange={handleChange}
         />
-        <ul className="space-y-3 mt-5">
-          {shows.map((s) => (
-            <ShowTile query={query} key={s.id} show={s} />
-          ))}
-        </ul>
+        {query && (
+          <ul className="space-y-3 mt-5">
+            {shows.map((s) => (
+              <ShowTile key={s.id} show={s} />
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );
@@ -41,6 +50,8 @@ const mapStateToProps = (s: State) => ({
   query: showsQuerySelector(s),
 });
 const mapDispatchToProps = {
-  fetchShows: showListFetchAction,
+  fetchShow: showListFetchAction,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(memo(ShowList));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(memo(ShowList))
+);

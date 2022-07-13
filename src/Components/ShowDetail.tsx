@@ -10,7 +10,6 @@ import { Show } from "../models/Show";
 import {
   showEntitiesSelector,
   showLoadingSelector,
-  showsSelector,
   showIdsSelector,
 } from "../Selectors/showSelector";
 import { State } from "../store";
@@ -51,7 +50,7 @@ const ShowDetail: FC<ShowDetailProps> = ({
   }, [params.showId]);
 
   useEffect(() => {
-    const query = (search as any).get("q");
+    const query = search.get("q");
     if (!show && query) {
       fetchShowList(query);
     }
